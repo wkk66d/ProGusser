@@ -94,12 +94,6 @@ function evaluateTopRanking(guess: Player, target: Player): AttributeFeedback {
 
 // --- Helpers ---
 
-const CLOSE_RANGE: Record<string, number> = {
-  age: 3,
-  majorCount: 1,
-  topRanking: 3,
-};
-
 function numericFeedback(
   attr: string,
   label: string,

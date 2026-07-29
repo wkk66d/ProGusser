@@ -1,4 +1,4 @@
-import { useGameStore, ROUND_TIME } from '../stores/gameStore';
+import { useGameStore } from '../stores/gameStore';
 
 export function Timer() {
   const timeRemaining = useGameStore((s) => s.timeRemaining);

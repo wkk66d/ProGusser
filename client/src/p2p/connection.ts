@@ -55,35 +55,32 @@ function setupSig(): void {
   if (!ws) return;
   ws.onmessage = async (e: MessageEvent) => {
     const msg: SignalingMessage = JSON.parse(e.data as string);
-    const store = useConnectionStore.getState();
 
     switch (msg.type) {
       case 'room_created':
-        store.setRoomCode(msg.room);
-        store.setMyPeerId(msg.peerId);
-        store.setRemotePeers(msg.peers || []);
-        store.setStatus('connected');
+        useConnectionStore.getState().setRoomCode(msg.room ?? null);
+        useConnectionStore.getState().setMyPeerId(msg.peerId ?? null);
+        useConnectionStore.getState().setRemotePeers(msg.peers || []);
+        useConnectionStore.getState().setStatus('connected');
         break;
 
       case 'room_joined':
-        store.setRoomCode(msg.room);
-        store.setMyPeerId(msg.peerId);
-        store.setRemotePeers(msg.peers || []);
-        store.setStatus('connected');
-        // Connect to each existing peer
+        useConnectionStore.getState().setRoomCode(msg.room ?? null);
+        useConnectionStore.getState().setMyPeerId(msg.peerId ?? null);
+        useConnectionStore.getState().setRemotePeers(msg.peers || []);
+        useConnectionStore.getState().setStatus('connected');
         for (const p of msg.peers || []) {
           await connectToPeer(p.peerId);
         }
         break;
 
       case 'peer_joined':
-        store.addRemotePeer(msg.peerId, msg.nickname);
-        // Don't initiate here — the newcomer will send us an offer
+        useConnectionStore.getState().addRemotePeer(msg.peerId!, msg.nickname ?? 'Unknown');
         break;
 
       case 'peer_left':
-        store.removeRemotePeer(msg.peerId);
-        disconnectPeer(msg.peerId);
+        useConnectionStore.getState().removeRemotePeer(msg.peerId!);
+        disconnectPeer(msg.peerId!);
         break;
 
       case 'signal':
@@ -91,12 +88,12 @@ function setupSig(): void {
         break;
 
       case 'error':
-        store.setError(msg.message || 'Unknown error');
+        useConnectionStore.getState().setError(msg.message || 'Unknown error');
         break;
     }
   };
-  ws.onclose = () => store.setStatus('disconnected');
-  ws.onerror = () => store.setError('Connection failed');
+  ws.onclose = () => useConnectionStore.getState().setStatus('disconnected');
+  ws.onerror = () => useConnectionStore.getState().setError('Connection failed');
 }
 
 function sendSig(msg: Record<string, unknown>): void {
@@ -237,7 +234,7 @@ function sendGame(peerId: string, msg: GameMessage): void {
 }
 
 function broadcastGame(msg: GameMessage): void {
-  for (const [id, entry] of peers) {
+  for (const [, entry] of peers) {
     if (entry.dc?.readyState === 'open') {
       entry.dc.send(JSON.stringify(msg));
     }

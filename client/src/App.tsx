@@ -12,7 +12,6 @@ export default function App() {
   const roomCode = useConnectionStore((s) => s.roomCode);
   const remotePeers = useConnectionStore((s) => s.remotePeers);
   const allConnected = remotePeers.length > 0 && remotePeers.every((p) => p.connected);
-  const anyConnected = remotePeers.some((p) => p.connected);
 
   if (phase === 'match_end') {
     return (

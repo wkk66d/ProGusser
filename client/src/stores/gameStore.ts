@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Player, GuessResult, OpponentGuessRow, OpponentGuessMap, GamePhase, FeedbackColor } from '../types/game';
+import type { Player, GuessResult, OpponentGuessMap, GamePhase, FeedbackColor } from '../types/game';
 
 interface GameState {
   phase: GamePhase;
@@ -78,7 +78,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   setNonces: (your, opponent) => set({ yourNonce: your, opponentNonce: opponent }),
 
-  setITimedOut: () => set((s) => ({ iTimedOut: true })),
+  setITimedOut: () => set({ iTimedOut: true }),
 
   setOpponentTimedOut: (peerId) =>
     set((s) => {
