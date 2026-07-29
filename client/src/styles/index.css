@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --color-feedback-green: #538d4e;
+  --color-feedback-green-bg: #538d4e33;
+  --color-feedback-yellow: #b59f3b;
+  --color-feedback-yellow-bg: #b59f3b33;
+  --color-feedback-gray: #3a3a3c;
+  --color-feedback-gray-bg: #3a3a3c66;
+  --color-surface-950: #09090b;
+  --color-surface-900: #18181b;
+  --color-surface-800: #27272a;
+  --color-surface-700: #3f3f46;
+  --color-surface-600: #52525b;
+  --color-surface-400: #a1a1aa;
+  --color-surface-200: #e4e4e7;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--color-surface-950);
+  color: var(--color-surface-200);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+#root { min-height: 100vh; }
+
+/* Wordle flip animation */
+@keyframes flipIn {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+.flip-cell {
+  animation: flipIn 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+/* Timer pulse */
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.timer-warning {
+  animation: pulse-red 1s ease-in-out infinite;
+}
