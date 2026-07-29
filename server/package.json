@@ -4,13 +4,15 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/index.ts",
-    "start": "npm run build && node dist/index.js",
-    "build": "tsc"
+    "start": "tsx src/index.ts",
+    "build": "npx tsc"
   },
   "dependencies": {
-    "@types/ws": "^8.18.1",
     "tsx": "^4.23.1",
-    "typescript": "^7.0.2",
     "ws": "^8.21.1"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.1",
+    "typescript": "^7.0.2"
   }
 }
